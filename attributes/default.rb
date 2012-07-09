@@ -32,6 +32,9 @@ default[:mongodb][:auto_configure][:replicaset] = true
 default[:mongodb][:auto_configure][:sharding] = true
 
 default[:mongodb][:enable_rest] = false
+default[:mongodb][:enable_directoryperdb] = false
+default[:mongodb][:enable_noprealloc] = false
+default[:mongodb][:enable_smallfiles] = false
 
 default[:mongodb][:user] = "mongodb"
 default[:mongodb][:group] = "mongodb"
