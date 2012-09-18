@@ -71,6 +71,8 @@ echo "** Running $NAME ($DAEMON $DAEMON_OPTS)"
 
 set -e
 
+ulimit -n 65535
+
 
 running_pid() {
 # Check if a given process pid's cmdline matches a given name
@@ -222,4 +224,3 @@ case "$1" in
 esac
 
 exit 0
-
