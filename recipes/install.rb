@@ -48,13 +48,13 @@ template init_file do
     group node['mongodb']['root_group']
     owner "root"
     mode mode
-    variables({
+    variables(
       :provides =>       "mongod",
       :sysconfig_file => node['mongodb']['sysconfig_file'],
       :ulimit =>         node['mongodb']['ulimit'],
       :bind_ip =>        node['mongodb']['config']['bind_ip'],
       :port =>           node['mongodb']['config']['port']
-    })
+    )
     action :create_if_missing
 end
 

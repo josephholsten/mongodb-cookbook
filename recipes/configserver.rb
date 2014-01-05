@@ -23,14 +23,6 @@ node.set[:mongodb][:is_configserver] = true
 
 include_recipe "mongodb::install"
 
-# we are not starting the configserver service with the --configsvr
-# commandline option because right now this only changes the port it's
-# running on, and we are overwriting this port anyway.
-mongodb_instance node['mongodb']['instance_name'] do
-  mongodb_type "configserver"
-  port         node['mongodb']['port']
-  logpath      node['mongodb']['logpath']
-  dbpath       node['mongodb']['dbpath']
-  enable_rest  node['mongodb']['enable_rest']
-  smallfiles   node['mongodb']['smallfiles']
+mongodb_configserver_instance "configserver" do
+  action [:enable, :start]
 end

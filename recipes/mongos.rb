@@ -22,28 +22,23 @@
 include_recipe "mongodb::install"
 include_recipe "mongodb::mongo_gem"
 
-service "mongodb" do
+service 'mongodb' do
   action [:disable, :stop]
 end
 
-configsrv = search(
+configserver_nodes = search(
   :node,
   "mongodb_cluster_name:#{node['mongodb']['cluster_name']} AND \
    mongodb_is_configserver:true AND \
    chef_environment:#{node.chef_environment}"
 )
 
-if configsrv.length != 1 and configsrv.length != 3
+if configserver_nodes.length != 1 and configsrv.length != 3
   Chef::Log.error("Found #{configsrv.length} configserver, need either one or three of them")
   raise "Wrong number of configserver nodes"
 end
 
-mongodb_instance "mongos" do
-  mongodb_type "mongos"
-  port         node['mongodb']['port']
-  logpath      node['mongodb']['logpath']
-  dbpath       node['mongodb']['dbpath']
-  configserver configsrv
-  enable_rest  node['mongodb']['enable_rest']
-  smallfiles   node['mongodb']['smallfiles']
+mongodb_mongos_instance "mongos" do
+  configserver_nodes configserver_nodes
+  action [:enable, :start]
 end

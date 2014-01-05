@@ -27,13 +27,7 @@ include_recipe "mongodb::install"
 # commandline option because right now this only changes the port it's
 # running on, and we are overwriting this port anyway.
 mongodb_instance node['mongodb']['instance_name'] do
-  mongodb_type "shard"
-  port         node['mongodb']['port']
-  logpath      node['mongodb']['logpath']
-  dbpath       node['mongodb']['dbpath']
   if node.mongodb.is_replicaset
     replicaset    node
   end
-  enable_rest node['mongodb']['enable_rest']
-  smallfiles   node['mongodb']['smallfiles']
 end
